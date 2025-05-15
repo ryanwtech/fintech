@@ -25,6 +25,14 @@ public class User extends BaseEntity {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private UserRole role = UserRole.USER;
+
     @Column(name = "is_active")
     private Boolean isActive = true;
+
+    public enum UserRole {
+        USER, ADMIN
+    }
 }
