@@ -1,16 +1,12 @@
 package com.fintech.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "bank_connections")
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class BankConnection extends BaseEntity {
 
     @Column(name = "user_id", nullable = false)
@@ -37,5 +33,62 @@ public class BankConnection extends BaseEntity {
 
     public enum ConnectionStatus {
         ACTIVE, INACTIVE, ERROR
+    }
+
+    // Getters and Setters
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getAccountNumberMasked() {
+        return accountNumberMasked;
+    }
+
+    public void setAccountNumberMasked(String accountNumberMasked) {
+        this.accountNumberMasked = accountNumberMasked;
+    }
+
+    public ConnectionStatus getConnectionStatus() {
+        return connectionStatus;
+    }
+
+    public void setConnectionStatus(ConnectionStatus connectionStatus) {
+        this.connectionStatus = connectionStatus;
+    }
+
+    public LocalDateTime getLastSyncAt() {
+        return lastSyncAt;
+    }
+
+    public void setLastSyncAt(LocalDateTime lastSyncAt) {
+        this.lastSyncAt = lastSyncAt;
+    }
+
+    public String getExternalConnectionId() {
+        return externalConnectionId;
+    }
+
+    public void setExternalConnectionId(String externalConnectionId) {
+        this.externalConnectionId = externalConnectionId;
+    }
+
+    public String getCredentialsEncrypted() {
+        return credentialsEncrypted;
+    }
+
+    public void setCredentialsEncrypted(String credentialsEncrypted) {
+        this.credentialsEncrypted = credentialsEncrypted;
     }
 }

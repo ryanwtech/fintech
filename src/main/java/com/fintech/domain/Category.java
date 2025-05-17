@@ -1,8 +1,6 @@
 package com.fintech.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
@@ -10,8 +8,6 @@ import java.util.UUID;
 @Table(name = "categories", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"user_id", "name"})
 })
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class Category extends BaseEntity {
 
     @Column(name = "user_id", nullable = false)
@@ -34,4 +30,61 @@ public class Category extends BaseEntity {
 
     @Column(name = "is_active")
     private Boolean isActive = true;
+
+    // Getters and Setters
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public Boolean getIsIncome() {
+        return isIncome;
+    }
+
+    public void setIsIncome(Boolean isIncome) {
+        this.isIncome = isIncome;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
 }
