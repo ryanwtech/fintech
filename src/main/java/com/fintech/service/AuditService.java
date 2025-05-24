@@ -1,6 +1,7 @@
 package com.fintech.service;
 
 import com.fintech.domain.AuditLog;
+import com.fintech.domain.BankConnection;
 import com.fintech.domain.Budget;
 import com.fintech.domain.BudgetItem;
 import com.fintech.domain.Rule;
@@ -159,6 +160,35 @@ public class AuditService {
             budgetItem.getCategoryId(),
             budgetItem.getPlannedAmount(),
             budgetItem.getActualAmount()
+        );
+    }
+
+    public void logBankConnectionAction(AuditLog.AuditAction action, BankConnection connection, BankConnection oldConnection) {
+        AuditLog auditLog = new AuditLog();
+        auditLog.setEntityType("BankConnection");
+        auditLog.setEntityId(connection.getId());
+        auditLog.setAction(action);
+        
+        // Set old values for updates
+        if (action == AuditLog.AuditAction.UPDATE && oldConnection != null) {
+            auditLog.setOldValues(createBankConnectionJson(oldConnection));
+        }
+        
+        // Set new values
+        auditLog.setNewValues(createBankConnectionJson(connection));
+        
+        auditLog.setCreatedAt(LocalDateTime.now());
+        
+        auditLogRepository.save(auditLog);
+    }
+
+    private String createBankConnectionJson(BankConnection connection) {
+        return String.format(
+            "{\"id\":\"%s\",\"bankName\":\"%s\",\"accountNumberMasked\":\"%s\",\"connectionStatus\":\"%s\"}",
+            connection.getId(),
+            connection.getBankName(),
+            connection.getAccountNumberMasked(),
+            connection.getConnectionStatus()
         );
     }
 }
