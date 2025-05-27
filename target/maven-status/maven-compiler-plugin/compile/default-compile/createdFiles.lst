@@ -43,6 +43,7 @@ com\fintech\web\GlobalExceptionHandler.class
 com\fintech\web\AuthController.class
 com\fintech\dto\TransactionDto.class
 com\fintech\domain\User$UserRole.class
+com\fintech\config\OpenApiConfig.class
 com\fintech\repo\TransactionRepository.class
 com\fintech\web\TransactionController.class
 com\fintech\dto\WebhookPayloadDto$TransactionData.class
@@ -85,6 +86,7 @@ com\fintech\dto\TrendReportDto.class
 com\fintech\domain\BudgetItem.class
 com\fintech\domain\BaseEntity.class
 com\fintech\config\JwtConfig.class
+com\fintech\service\AuditLogService.class
 com\fintech\web\WebhookController.class
 com\fintech\service\CsvTransactionParser$CsvTransactionRow.class
 com\fintech\repo\UserRepository.class

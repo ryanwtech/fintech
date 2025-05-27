@@ -39,6 +39,9 @@ public class BudgetService {
     private TransactionRepository transactionRepository;
 
     @Autowired
+    private AuditLogService auditLogService;
+
+    @Autowired
     private AuditService auditService;
 
     public BudgetDto getBudgetByMonth(UUID userId, String month) {
@@ -92,7 +95,7 @@ public class BudgetService {
         }
 
         // Log audit
-        auditService.logBudgetAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedBudget, null);
+        auditLogService.logBudgetAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedBudget, null);
 
         return enrichBudgetWithData(savedBudget);
     }
@@ -135,7 +138,7 @@ public class BudgetService {
         BudgetItem savedItem = budgetItemRepository.save(budgetItem);
 
         // Log audit
-        auditService.logBudgetItemAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, savedItem, null);
+        auditLogService.logBudgetItemAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, savedItem, null);
 
         return enrichBudgetItemWithData(savedItem);
     }
@@ -152,7 +155,7 @@ public class BudgetService {
         budgetItemRepository.deleteByBudgetId(budgetId);
 
         // Log audit before deletion
-        auditService.logBudgetAction(com.fintech.domain.AuditLog.AuditAction.DELETE, budget, null);
+        auditLogService.logBudgetAction(com.fintech.domain.AuditLog.AuditAction.DELETE, budget, null);
 
         budgetRepository.delete(budget);
     }

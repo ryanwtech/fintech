@@ -18,6 +18,9 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private AuditLogService auditLogService;
+
     public List<CategoryDto> getUserCategories(UUID userId) {
         List<Category> categories = categoryRepository.findByUserIdAndIsActiveTrue(userId);
         List<Category> globalCategories = categoryRepository.findGlobalCategories();
@@ -62,6 +65,10 @@ public class CategoryService {
         category.setIsActive(true);
 
         Category savedCategory = categoryRepository.save(category);
+        
+        // Log audit
+        auditLogService.logCategoryAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedCategory, null);
+        
         return CategoryDto.fromEntity(savedCategory);
     }
 
@@ -100,7 +107,14 @@ public class CategoryService {
             category.setIsIncome(request.getIsIncome());
         }
 
+        // Store old values for audit
+        Category oldCategory = createCategoryCopy(category);
+
         Category savedCategory = categoryRepository.save(category);
+        
+        // Log audit
+        auditLogService.logCategoryAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, savedCategory, oldCategory);
+        
         return CategoryDto.fromEntity(savedCategory);
     }
 
@@ -117,6 +131,25 @@ public class CategoryService {
 
         // Soft delete
         category.setIsActive(false);
+        
+        // Log audit before soft deletion
+        auditLogService.logCategoryAction(com.fintech.domain.AuditLog.AuditAction.DELETE, category, null);
+        
         categoryRepository.save(category);
+    }
+
+    private Category createCategoryCopy(Category original) {
+        Category copy = new Category();
+        copy.setId(original.getId());
+        copy.setUserId(original.getUserId());
+        copy.setName(original.getName());
+        copy.setDescription(original.getDescription());
+        copy.setColor(original.getColor());
+        copy.setIcon(original.getIcon());
+        copy.setIsIncome(original.getIsIncome());
+        copy.setIsActive(original.getIsActive());
+        copy.setCreatedAt(original.getCreatedAt());
+        copy.setUpdatedAt(original.getUpdatedAt());
+        return copy;
     }
 }

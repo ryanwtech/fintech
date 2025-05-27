@@ -38,6 +38,9 @@ public class TransactionService {
     private AuditService auditService;
 
     @Autowired
+    private AuditLogService auditLogService;
+
+    @Autowired
     private RuleService ruleService;
 
     public Page<TransactionDto> getTransactionsByAccount(UUID accountId, LocalDateTime from, LocalDateTime to, 
@@ -79,7 +82,7 @@ public class TransactionService {
         Transaction savedTransaction = transactionRepository.save(transaction);
 
         // Log audit
-        auditService.logTransactionAction(AuditLog.AuditAction.CREATE, savedTransaction, null);
+        auditLogService.logTransactionAction(AuditLog.AuditAction.CREATE, savedTransaction, null);
 
         return TransactionDto.fromEntity(savedTransaction);
     }
@@ -113,7 +116,7 @@ public class TransactionService {
         Transaction savedTransaction = transactionRepository.save(transaction);
 
         // Log audit
-        auditService.logTransactionAction(AuditLog.AuditAction.UPDATE, savedTransaction, oldTransaction);
+        auditLogService.logTransactionAction(AuditLog.AuditAction.UPDATE, savedTransaction, oldTransaction);
 
         return TransactionDto.fromEntity(savedTransaction);
     }
@@ -163,7 +166,7 @@ public class TransactionService {
             }
 
             // Log import audit
-            auditService.logImportAction(accountId, file.getOriginalFilename(), successfulImports, failedImports);
+            auditLogService.logImportAction("Transaction", accountId, file.getOriginalFilename(), successfulImports, failedImports);
 
             return new CsvImportResult(csvRows.size(), successfulImports, failedImports, errors, importedTransactions);
 

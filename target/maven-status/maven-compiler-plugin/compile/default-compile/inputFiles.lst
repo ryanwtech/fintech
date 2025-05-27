@@ -4,7 +4,9 @@ E:\Web\Java\fintech\src\main\java\com\fintech\domain\BankConnection.java
 E:\Web\Java\fintech\src\main\java\com\fintech\domain\BaseEntity.java
 E:\Web\Java\fintech\src\main\java\com\fintech\repo\WebhookEventRepository.java
 E:\Web\Java\fintech\src\main\java\com\fintech\service\CategoryService.java
+E:\Web\Java\fintech\src\main\java\com\fintech\service\AuditLogService.java
 E:\Web\Java\fintech\src\main\java\com\fintech\service\AuthService.java
+E:\Web\Java\fintech\src\main\java\com\fintech\config\OpenApiConfig.java
 E:\Web\Java\fintech\src\main\java\com\fintech\web\CategoryController.java
 E:\Web\Java\fintech\src\main\java\com\fintech\service\ReportsService.java
 E:\Web\Java\fintech\src\main\java\com\fintech\web\GlobalExceptionHandler.java

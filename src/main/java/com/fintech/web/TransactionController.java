@@ -2,6 +2,11 @@ package com.fintech.web;
 
 import com.fintech.dto.*;
 import com.fintech.service.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,22 +25,28 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
+@Tag(name = "Transactions", description = "Transaction management operations")
 public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
 
     @GetMapping("/accounts/{accountId}/transactions")
+    @Operation(summary = "Get transactions for an account", description = "Retrieve paginated transactions for a specific account with optional filtering")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved transactions"),
+            @ApiResponse(responseCode = "404", description = "Account not found")
+    })
     public ResponseEntity<Page<TransactionDto>> getTransactions(
-            @PathVariable UUID accountId,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
-            @RequestParam(required = false) String q,
-            @RequestParam(required = false) UUID categoryId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size,
-            @RequestParam(defaultValue = "postedAt") String sortBy,
-            @RequestParam(defaultValue = "desc") String sortDir) {
+            @Parameter(description = "Account ID") @PathVariable UUID accountId,
+            @Parameter(description = "Start date filter") @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @Parameter(description = "End date filter") @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+            @Parameter(description = "Search query") @RequestParam(required = false) String q,
+            @Parameter(description = "Category ID filter") @RequestParam(required = false) UUID categoryId,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Page size") @RequestParam(defaultValue = "20") int size,
+            @Parameter(description = "Sort field") @RequestParam(defaultValue = "postedAt") String sortBy,
+            @Parameter(description = "Sort direction") @RequestParam(defaultValue = "desc") String sortDir) {
 
         Sort sort = sortDir.equalsIgnoreCase("desc") ? 
                 Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
