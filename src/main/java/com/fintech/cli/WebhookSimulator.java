@@ -1,10 +1,6 @@
 package com.fintech.cli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -12,17 +8,14 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Scanner;
 
-@SpringBootApplication
 public class WebhookSimulator {
 
     public static void main(String[] args) {
-        SpringApplication.run(WebhookSimulator.class, args);
+        new WebhookSimulator().run();
     }
 
-    @Bean
-    public CommandLineRunner webhookSimulator() {
-        return args -> {
-            Scanner scanner = new Scanner(System.in);
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
             RestTemplate restTemplate = new RestTemplate();
             ObjectMapper objectMapper = new ObjectMapper();
 
@@ -63,7 +56,6 @@ public class WebhookSimulator {
                 }
                 System.out.println();
             }
-        };
     }
 
     private void simulateNewTransactionsWebhook(RestTemplate restTemplate, ObjectMapper objectMapper, Scanner scanner) {

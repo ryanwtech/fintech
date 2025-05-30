@@ -128,7 +128,7 @@ class TransactionServiceIntegrationTest extends BaseIntegrationTest {
 
         // When
         Page<TransactionDto> result = transactionService.getTransactionsByAccount(
-                testAccountId, from, to, "coffee", testCategoryId, pageable);
+                testAccountId, from, to, testCategoryId, "coffee", pageable);
 
         // Then
         assertThat(result).isNotNull();

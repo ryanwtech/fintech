@@ -20,7 +20,7 @@ public class RuleService {
     private RuleRepository ruleRepository;
 
     @Autowired
-    private AuditService auditService;
+    private AuditLogService auditLogService;
 
     public List<RuleDto> getUserRules(UUID userId) {
         List<Rule> rules = ruleRepository.findByUserIdOrderByPriorityAsc(userId);
@@ -57,7 +57,7 @@ public class RuleService {
         Rule savedRule = ruleRepository.save(rule);
 
         // Log audit
-        auditService.logRuleAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedRule, null);
+        auditLogService.logRuleAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedRule, null);
 
         return RuleDto.fromEntity(savedRule);
     }
@@ -98,7 +98,7 @@ public class RuleService {
         Rule savedRule = ruleRepository.save(rule);
 
         // Log audit
-        auditService.logRuleAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, savedRule, oldRule);
+        auditLogService.logRuleAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, savedRule, oldRule);
 
         return RuleDto.fromEntity(savedRule);
     }
@@ -112,7 +112,7 @@ public class RuleService {
         }
 
         // Log audit before deletion
-        auditService.logRuleAction(com.fintech.domain.AuditLog.AuditAction.DELETE, rule, null);
+        auditLogService.logRuleAction(com.fintech.domain.AuditLog.AuditAction.DELETE, rule, null);
 
         ruleRepository.delete(rule);
     }

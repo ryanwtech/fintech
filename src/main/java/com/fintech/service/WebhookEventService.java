@@ -38,7 +38,7 @@ public class WebhookEventService {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private AuditService auditService;
+    private AuditLogService auditLogService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -151,7 +151,7 @@ public class WebhookEventService {
         Transaction savedTransaction = transactionRepository.save(transaction);
 
         // Log audit
-        auditService.logTransactionAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedTransaction, null);
+        auditLogService.logTransactionAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedTransaction, null);
     }
 
     private void updateTransaction(Transaction existingTransaction, WebhookPayloadDto.TransactionData transactionData) {
@@ -178,7 +178,7 @@ public class WebhookEventService {
         Transaction savedTransaction = transactionRepository.save(existingTransaction);
 
         // Log audit
-        auditService.logTransactionAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, savedTransaction, oldTransaction);
+        auditLogService.logTransactionAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, savedTransaction, oldTransaction);
     }
 
     private Transaction createTransactionCopy(Transaction original) {

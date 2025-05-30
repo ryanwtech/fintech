@@ -2,12 +2,12 @@ package com.fintech.integration;
 
 import com.fintech.domain.Account;
 import com.fintech.domain.Category;
-import com.fintech.domain.Rule;
 import com.fintech.domain.User;
 import com.fintech.dto.CreateRuleRequest;
 import com.fintech.dto.CreateTransactionRequest;
 import com.fintech.dto.TransactionDto;
 import com.fintech.repo.*;
+import com.fintech.service.AuditLogService;
 import com.fintech.service.RuleService;
 import com.fintech.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,13 +30,7 @@ class RuleIntegrationTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     @Autowired
     private RuleRepository ruleRepository;
@@ -47,7 +40,7 @@ class RuleIntegrationTest {
 
     private RuleService ruleService;
     private TransactionService transactionService;
-    private AuditService auditService;
+    private AuditLogService auditLogService;
 
     private User user;
     private Account account;
@@ -57,7 +50,7 @@ class RuleIntegrationTest {
     @BeforeEach
     void setUp() {
         // Create audit service
-        auditService = new AuditService();
+        auditLogService = new AuditLogService();
         
         // Create rule service
         ruleService = new RuleService();
@@ -68,7 +61,7 @@ class RuleIntegrationTest {
             
             var auditField = RuleService.class.getDeclaredField("auditService");
             auditField.setAccessible(true);
-            auditField.set(ruleService, auditService);
+            auditField.set(ruleService, auditLogService);
         } catch (Exception e) {
             throw new RuntimeException("Failed to inject dependencies", e);
         }
@@ -90,7 +83,7 @@ class RuleIntegrationTest {
             
             var auditServiceField = TransactionService.class.getDeclaredField("auditService");
             auditServiceField.setAccessible(true);
-            auditServiceField.set(transactionService, auditService);
+            auditServiceField.set(transactionService, auditLogService);
         } catch (Exception e) {
             throw new RuntimeException("Failed to inject dependencies", e);
         }

@@ -3,8 +3,11 @@ package com.fintech.service;
 import com.fintech.domain.AuditLog;
 import com.fintech.repo.AuditLogRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -17,8 +20,13 @@ public class AuditLogService {
     @Autowired
     private AuditLogRepository auditLogRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
+
+    public AuditLogService() {
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    }
 
     /**
      * Log a generic action with entity details
@@ -30,6 +38,7 @@ public class AuditLogService {
     /**
      * Log a generic action with entity details and old values
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void logAction(AuditLog.AuditAction action, String entityType, UUID entityId, Object newPayload, Object oldPayload) {
         AuditLog auditLog = new AuditLog();
         auditLog.setEntityType(entityType);

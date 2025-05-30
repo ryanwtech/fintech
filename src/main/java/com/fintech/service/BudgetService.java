@@ -41,9 +41,6 @@ public class BudgetService {
     @Autowired
     private AuditLogService auditLogService;
 
-    @Autowired
-    private AuditService auditService;
-
     public BudgetDto getBudgetByMonth(UUID userId, String month) {
         YearMonth yearMonth = YearMonth.parse(month);
         LocalDate startDate = yearMonth.atDay(1);

@@ -35,9 +35,6 @@ public class TransactionService {
     private CsvTransactionParser csvParser;
 
     @Autowired
-    private AuditService auditService;
-
-    @Autowired
     private AuditLogService auditLogService;
 
     @Autowired
@@ -180,7 +177,7 @@ public class TransactionService {
                 .orElseThrow(() -> new RuntimeException("Transaction not found"));
 
         // Log audit before deletion
-        auditService.logTransactionAction(AuditLog.AuditAction.DELETE, transaction, null);
+        auditLogService.logTransactionAction(AuditLog.AuditAction.DELETE, transaction, null);
 
         transactionRepository.delete(transaction);
     }

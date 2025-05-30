@@ -22,7 +22,7 @@ public class MockBankService {
     private BankConnectionRepository bankConnectionRepository;
 
     @Autowired
-    private AuditService auditService;
+    private AuditLogService auditLogService;
 
     public BankConnectionDto linkBank(UUID userId, LinkBankRequest request) {
         // Check if user already has a connection for this account
@@ -48,7 +48,7 @@ public class MockBankService {
         BankConnection savedConnection = bankConnectionRepository.save(connection);
 
         // Log audit
-        auditService.logBankConnectionAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedConnection, null);
+        auditLogService.logBankConnectionAction(com.fintech.domain.AuditLog.AuditAction.CREATE, savedConnection, null);
 
         return BankConnectionDto.fromEntity(savedConnection);
     }
@@ -84,7 +84,7 @@ public class MockBankService {
         bankConnectionRepository.save(connection);
 
         // Log audit
-        auditService.logBankConnectionAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, connection, null);
+        auditLogService.logBankConnectionAction(com.fintech.domain.AuditLog.AuditAction.UPDATE, connection, null);
     }
 
     public BankConnection getConnectionByAccessToken(String accessToken) {
