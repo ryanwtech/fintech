@@ -30,8 +30,4 @@ CREATE INDEX IF NOT EXISTS idx_category_user_active ON categories(user_id, is_ac
 CREATE INDEX IF NOT EXISTS idx_transaction_user_posted_amount ON transactions(account_id, posted_at, amount);
 CREATE INDEX IF NOT EXISTS idx_transaction_user_category_posted ON transactions(account_id, category_id, posted_at);
 
--- Audit log indexes
-CREATE INDEX IF NOT EXISTS idx_audit_log_entity_type ON audit_logs(entity_type);
-CREATE INDEX IF NOT EXISTS idx_audit_log_entity_id ON audit_logs(entity_id);
-CREATE INDEX IF NOT EXISTS idx_audit_log_created_at ON audit_logs(created_at);
-CREATE INDEX IF NOT EXISTS idx_audit_log_entity_type_created ON audit_logs(entity_type, created_at);
+-- Audit log indexes are created in V4 migration after the table is created

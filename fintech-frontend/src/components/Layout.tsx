@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useMe, useLogout } from '../hooks/useAuth';
+import { useAuthStore } from '../store/authStore';
 import { 
   Home, 
   CreditCard, 
@@ -30,8 +31,12 @@ const navigation = [
 export const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const { data: user } = useMe();
+  const { user: storeUser } = useAuthStore();
   const logout = useLogout();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Use store user as fallback
+  const currentUser = user || storeUser;
 
   const handleLogout = () => {
     logout.mutate();
@@ -119,9 +124,9 @@ export const Layout = ({ children }: LayoutProps) => {
             <div className="flex items-center gap-x-4 lg:gap-x-6">
               <div className="flex items-center gap-x-2">
                 <span className="text-sm font-medium text-gray-700">
-                  {user?.firstName} {user?.lastName}
+                  {currentUser?.firstName} {currentUser?.lastName}
                 </span>
-                <span className="text-xs text-gray-500">({user?.role})</span>
+                <span className="text-xs text-gray-500">({currentUser?.role})</span>
               </div>
               <button
                 onClick={handleLogout}

@@ -1,4 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
 import { useMe } from '../hooks/useAuth';
 import { Loader2 } from 'lucide-react';
 
@@ -8,9 +9,11 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const location = useLocation();
-  const { data: user, isLoading, error } = useMe();
+  const { isAuthenticated, user } = useAuthStore();
+  const { data: userData, isLoading, error } = useMe();
 
-  if (isLoading) {
+  // Show loading if we're checking authentication
+  if (isLoading || (isAuthenticated && !userData)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -18,7 +21,8 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  if (error || !user) {
+  // Redirect to login if not authenticated or if there's an error
+  if (!isAuthenticated || !user || error) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

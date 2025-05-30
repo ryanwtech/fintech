@@ -31,7 +31,7 @@ CREATE TABLE accounts (
 -- Create categories table
 CREATE TABLE categories (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE, -- Allow NULL for global categories
     name VARCHAR(100) NOT NULL,
     description TEXT,
     color VARCHAR(7), -- Hex color code
@@ -40,7 +40,7 @@ CREATE TABLE categories (
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW(),
-    UNIQUE(user_id, name)
+    UNIQUE(user_id, name) -- Note: NULL values are not considered equal in unique constraints
 );
 
 -- Create transactions table
