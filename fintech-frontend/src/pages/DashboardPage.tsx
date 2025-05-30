@@ -1,8 +1,28 @@
 import { useAccounts } from '../hooks/useAccounts';
+import { CashflowSummary } from '../components/CashflowSummary';
+import { RecentTransactions } from '../components/RecentTransactions';
+import { BudgetProgress } from '../components/BudgetProgress';
 import { CreditCard, DollarSign, TrendingUp, TrendingDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export const DashboardPage = () => {
   const { data: accounts, isLoading } = useAccounts();
+  const [dateRange, setDateRange] = useState<{ from: string; to: string }>({
+    from: '',
+    to: '',
+  });
+
+  // Set default date range to current month
+  useEffect(() => {
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    
+    setDateRange({
+      from: firstDay.toISOString().split('T')[0],
+      to: lastDay.toISOString().split('T')[0],
+    });
+  }, []);
 
   if (isLoading) {
     return (
@@ -105,6 +125,20 @@ export const DashboardPage = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Cashflow Summary */}
+      {dateRange.from && dateRange.to && (
+        <CashflowSummary from={dateRange.from} to={dateRange.to} />
+      )}
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Recent Transactions */}
+        <RecentTransactions limit={5} />
+        
+        {/* Budget Progress */}
+        <BudgetProgress month={dateRange.from} />
       </div>
 
       {/* Recent Accounts */}

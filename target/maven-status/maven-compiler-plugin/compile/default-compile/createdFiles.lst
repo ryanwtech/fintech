@@ -23,6 +23,7 @@ com\fintech\service\AuthService.class
 com\fintech\domain\Category.class
 com\fintech\dto\AuthRequest.class
 com\fintech\repo\AuditLogRepository.class
+com\fintech\dto\SpendByCategoryReportDto.class
 com\fintech\service\TransactionService.class
 com\fintech\dto\TrendReportDto$MonthlyTrendData.class
 com\fintech\service\RuleService$RuleActions.class
@@ -53,6 +54,7 @@ com\fintech\dto\RuleDto.class
 com\fintech\repo\CategoryRepository.class
 com\fintech\dto\CreateAccountRequest.class
 com\fintech\cli\WebhookSimulator$TransactionData.class
+com\fintech\dto\SpendByCategoryReportDto$CategorySpendData.class
 com\fintech\dto\UpdateRuleRequest.class
 com\fintech\dto\WebhookPayloadDto.class
 com\fintech\dto\CreateBudgetRequest.class
@@ -66,6 +68,7 @@ com\fintech\cli\WebhookSimulator$WebhookPayload.class
 com\fintech\dto\CreateRuleRequest.class
 com\fintech\web\RuleController.class
 com\fintech\cli\WebhookSimulator.class
+com\fintech\dto\BankConnectionDto.class
 com\fintech\repo\BankConnectionRepository.class
 com\fintech\config\JpaConfig.class
 com\fintech\service\AuditService.class
