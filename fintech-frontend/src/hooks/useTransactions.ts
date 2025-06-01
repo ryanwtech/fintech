@@ -11,6 +11,8 @@ export const useTransactions = (
     categoryId?: string;
     page?: number;
     size?: number;
+    sortBy?: string;
+    sortDir?: 'asc' | 'desc';
   }
 ) => {
   return useQuery({
@@ -22,6 +24,27 @@ export const useTransactions = (
       return response.data;
     },
     enabled: !!accountId,
+  });
+};
+
+export const useAllTransactions = (params?: {
+  from?: string;
+  to?: string;
+  q?: string;
+  categoryId?: string;
+  page?: number;
+  size?: number;
+  sortBy?: string;
+  sortDir?: 'asc' | 'desc';
+}) => {
+  return useQuery({
+    queryKey: ['transactions', 'all', params],
+    queryFn: async () => {
+      const response = await api.get('/transactions', {
+        params,
+      });
+      return response.data;
+    },
   });
 };
 
@@ -47,6 +70,20 @@ export const useUpdateTransaction = () => {
     mutationFn: async ({ id, data }) => {
       const response = await api.patch(`/transactions/${id}`, data);
       return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
+    },
+  });
+};
+
+export const useDeleteTransaction = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation<void, Error, string>({
+    mutationFn: async (id) => {
+      await api.delete(`/transactions/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
