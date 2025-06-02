@@ -78,12 +78,31 @@ export interface Rule {
   userId: string;
   name: string;
   description?: string;
-  conditions: string;
-  actions: string;
+  pattern: string;
+  targetCategoryId: string;
+  targetCategoryName?: string;
   priority: number;
   enabled: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CreateRuleRequest {
+  name: string;
+  description?: string;
+  pattern: string;
+  targetCategoryId: string;
+  priority?: number;
+  enabled?: boolean;
+}
+
+export interface UpdateRuleRequest {
+  name?: string;
+  description?: string;
+  pattern?: string;
+  targetCategoryId?: string;
+  priority?: number;
+  enabled?: boolean;
 }
 
 export interface BankConnection {
