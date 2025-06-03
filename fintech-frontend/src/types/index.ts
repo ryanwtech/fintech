@@ -233,3 +233,17 @@ export interface MonthlyTrendData {
   netCashflow: number;
   transactionCount: number;
 }
+
+export interface BudgetItem {
+  id: string;
+  budgetId: string;
+  categoryId: string;
+  plannedAmount: number;
+  actualAmount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BudgetWithItems extends Budget {
+  items: BudgetItem[];
+}

@@ -3,11 +3,11 @@ import { api } from '../lib/api';
 import type { Budget, BudgetItem, CreateBudgetRequest, UpdateBudgetItemRequest } from '../types';
 
 export const useBudgets = (month?: string) => {
-  return useQuery<Budget[]>({
+  return useQuery({
     queryKey: ['budgets', month],
     queryFn: async () => {
       const response = await api.get('/budgets', {
-        params: month ? { month } : {},
+        params: month ? { month } : undefined,
       });
       return response.data;
     },
@@ -15,24 +15,12 @@ export const useBudgets = (month?: string) => {
 };
 
 export const useBudget = (id: string) => {
-  return useQuery<Budget>({
-    queryKey: ['budgets', id],
+  return useQuery({
+    queryKey: ['budget', id],
     queryFn: async () => {
       const response = await api.get(`/budgets/${id}`);
       return response.data;
     },
-    enabled: !!id,
-  });
-};
-
-export const useBudgetItems = (budgetId: string) => {
-  return useQuery<BudgetItem[]>({
-    queryKey: ['budget-items', budgetId],
-    queryFn: async () => {
-      const response = await api.get(`/budgets/${budgetId}/items`);
-      return response.data;
-    },
-    enabled: !!budgetId,
   });
 };
 
@@ -59,7 +47,20 @@ export const useUpdateBudgetItem = () => {
       return response.data;
     },
     onSuccess: (_, { budgetId }) => {
-      queryClient.invalidateQueries({ queryKey: ['budget-items', budgetId] });
+      queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['budget', budgetId] });
+    },
+  });
+};
+
+export const useDeleteBudget = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation<void, Error, string>({
+    mutationFn: async (id) => {
+      await api.delete(`/budgets/${id}`);
+    },
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
   });
