@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { useRules, useCreateRule, useUpdateRule, useDeleteRule, useToggleRule, useReorderRules } from '../hooks/useRules';
 import { RuleForm } from '../components/RuleForm';
@@ -77,8 +78,8 @@ export const RulesPage = () => {
     }
 
     const currentRules = rules || [];
-    const draggedIndex = currentRules.findIndex(r => r.id === draggedRule.id);
-    const targetIndex = currentRules.findIndex(r => r.id === targetRule.id);
+    const draggedIndex = currentRules.findIndex((r: any) => r.id === draggedRule.id);
+    const targetIndex = currentRules.findIndex((r: any) => r.id === targetRule.id);
 
     if (draggedIndex === -1 || targetIndex === -1) {
       return;

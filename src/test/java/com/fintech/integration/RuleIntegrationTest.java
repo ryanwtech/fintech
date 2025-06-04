@@ -2,6 +2,7 @@ package com.fintech.integration;
 
 import com.fintech.domain.Account;
 import com.fintech.domain.Category;
+import com.fintech.domain.Rule;
 import com.fintech.domain.User;
 import com.fintech.dto.CreateRuleRequest;
 import com.fintech.dto.CreateTransactionRequest;
@@ -19,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +32,13 @@ class RuleIntegrationTest {
     private TestEntityManager entityManager;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private RuleRepository ruleRepository;

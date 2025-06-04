@@ -152,15 +152,6 @@ pnpm build
 
 The API is fully documented with OpenAPI/Swagger UI available at `/api/docs` when running the application.
 
-### Key Endpoints
-- `GET /api/me` - Get current user profile
-- `POST /api/auth/login` - User authentication
-- `GET /api/transactions` - List transactions
-- `POST /api/transactions/import` - Import CSV transactions
-- `GET /api/reports/cashflow` - Cashflow reports
-- `POST /api/integrations/mockbank/link` - Link bank account
-- `POST /api/webhooks/test/simulate` - Simulate webhook
-
 ## 🧪 Testing
 
 ### Backend Tests
@@ -247,39 +238,6 @@ VITE_API_URL=http://localhost:8080/api
 - CSRF protection
 - Rate limiting (configurable)
 - Audit logging for all operations
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Guidelines
-- Follow the existing code style
-- Write tests for new features
-- Update documentation
-- Ensure all CI checks pass
-- Use conventional commits
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Spring Boot team for the excellent framework
-- React team for the amazing library
-- Tailwind CSS for the utility-first approach
-- All open-source contributors
-
-## 📞 Support
-
-- **Documentation**: [Wiki](https://github.com/yourusername/fintech/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/fintech/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/fintech/discussions)
-- **Email**: support@fintech.com
 
 ---
 

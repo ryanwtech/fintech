@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useCategories } from '../hooks/useCategories';
 import { CategoryAutocomplete } from './CategoryAutocomplete';
 import { RuleTestModal } from './RuleTestModal';
 import { Play, X } from 'lucide-react';
@@ -24,8 +23,6 @@ export const RuleForm = ({ rule, onSubmit, onCancel, isLoading = false }: RuleFo
   const [showTestModal, setShowTestModal] = useState(false);
   const [isValidPattern, setIsValidPattern] = useState(true);
   const [patternError, setPatternError] = useState('');
-
-  const { data: categories } = useCategories();
 
   useEffect(() => {
     if (rule) {
@@ -52,6 +49,7 @@ export const RuleForm = ({ rule, onSubmit, onCancel, isLoading = false }: RuleFo
       setIsValidPattern(true);
       setPatternError('');
       return true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setIsValidPattern(false);
       setPatternError('Invalid regular expression pattern');
