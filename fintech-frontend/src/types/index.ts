@@ -247,3 +247,40 @@ export interface BudgetItem {
 export interface BudgetWithItems extends Budget {
   items: BudgetItem[];
 }
+
+export interface LinkBankRequest {
+  bankName: string;
+  accountNumber: string;
+  routingNumber?: string;
+  accountName?: string;
+  currency?: string;
+}
+
+export interface WebhookEvent {
+  id: string;
+  eventType: string;
+  source: string;
+  payload: string;
+  status: 'PENDING' | 'PROCESSED' | 'FAILED';
+  createdAt: string;
+  processedAt?: string;
+  errorMessage?: string;
+  retryCount: number;
+}
+
+export interface WebhookPayload {
+  eventType: string;
+  accountId: string;
+  transactions: WebhookTransaction[];
+}
+
+export interface WebhookTransaction {
+  transactionId: string;
+  amount: number;
+  description: string;
+  merchant?: string;
+  postedAt: string;
+  currency: string;
+  category?: string;
+  status: string;
+}

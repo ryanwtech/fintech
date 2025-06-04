@@ -1,253 +1,209 @@
-# Fintech Backend API
+# Fintech Personal Finance Management
 
-A comprehensive fintech backend API built with Spring Boot, featuring banking integration, transaction management, budgeting, reporting, and audit logging capabilities.
+[![Backend CI](https://github.com/yourusername/fintech/actions/workflows/backend.yml/badge.svg)](https://github.com/yourusername/fintech/actions/workflows/backend.yml)
+[![Frontend CI](https://github.com/yourusername/fintech/actions/workflows/frontend.yml/badge.svg)](https://github.com/yourusername/fintech/actions/workflows/frontend.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://openjdk.java.net/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)](https://www.docker.com/)
+
+A comprehensive personal finance management application built with Spring Boot and React. Track your accounts, transactions, budgets, and financial goals with powerful reporting and automation features.
 
 ## 🚀 Features
 
-### Core Functionality
-- **User Management**: Registration, authentication, and profile management
-- **Account Management**: Multiple account types with balance tracking
-- **Transaction Management**: CRUD operations, CSV import, and filtering
-- **Category Management**: User-specific and global categories
-- **Budget Management**: Monthly budgets with spending tracking
-- **Reports**: Cashflow, spending analysis, and trend reports
-- **Rules Engine**: Automatic transaction categorization
-- **Bank Integration**: Mock bank connector with webhook support
-- **Audit Logging**: Comprehensive audit trails for all operations
+### 💰 **Account Management**
+- Multiple account types (Checking, Savings, Credit, Investment)
+- Real-time balance tracking
+- Account linking and management
+- Transaction categorization
 
-### Technical Features
-- **RESTful API**: Well-documented REST endpoints
-- **JWT Authentication**: Secure token-based authentication
-- **Database**: PostgreSQL with Flyway migrations
-- **Docker Support**: Containerized deployment
-- **API Documentation**: Interactive Swagger UI
-- **Testing**: Comprehensive integration tests with Testcontainers
-- **Validation**: Bean validation for data integrity
-- **CORS Support**: Cross-origin resource sharing enabled
+### 📊 **Transaction Management**
+- Global transaction view with advanced filtering
+- Inline editing and bulk operations
+- CSV import/export functionality
+- Automatic categorization with rules
+- Search and filter capabilities
+
+### 📈 **Budgeting & Planning**
+- Monthly budget creation and tracking
+- Per-category budget allocation
+- Visual progress bars and status indicators
+- Over/under budget alerts
+- Month-by-month budget switching
+
+### 📋 **Reports & Analytics**
+- Interactive charts with Recharts
+- Cashflow analysis with area charts
+- Spending by category with pie charts
+- Monthly trends with line charts
+- Exportable reports in CSV format
+
+### 🔧 **Automation & Rules**
+- Smart transaction categorization
+- Pattern-based rule creation
+- Rule testing and validation
+- Priority-based rule processing
+- Drag-and-drop rule reordering
+
+### 🏦 **Bank Integration**
+- Mock bank connector for testing
+- Webhook simulation and testing
+- Real-time transaction import
+- Connection status monitoring
+
+### 🎨 **User Experience**
+- Dark mode support
+- Responsive design
+- Error boundaries and 404 pages
+- Toast notifications
+- Skeleton loaders
+- Optimistic updates
 
 ## 🛠️ Tech Stack
 
-- **Java 17**
-- **Spring Boot 3.4.0**
-- **Spring Data JPA**
-- **PostgreSQL 15**
-- **Flyway** (Database migrations)
-- **JWT** (Authentication)
-- **SpringDoc OpenAPI 3** (API documentation)
-- **Testcontainers** (Integration testing)
-- **Docker & Docker Compose**
-- **Maven** (Build tool)
+### Backend
+- **Java 17** - Modern Java features
+- **Spring Boot 3.4.0** - Rapid application development
+- **Spring Security** - Authentication and authorization
+- **Spring Data JPA** - Data persistence
+- **PostgreSQL 15** - Relational database
+- **Flyway** - Database migrations
+- **JWT** - Token-based authentication
+- **Testcontainers** - Integration testing
+- **Maven** - Dependency management
 
-## 📋 Prerequisites
+### Frontend
+- **React 18** - User interface library
+- **TypeScript 5.0** - Type safety
+- **Vite** - Build tool and dev server
+- **TanStack Query** - Server state management
+- **React Router** - Client-side routing
+- **React Hook Form** - Form management
+- **Zod** - Schema validation
+- **Recharts** - Data visualization
+- **Tailwind CSS** - Utility-first styling
+- **Lucide React** - Icon library
+- **Zustand** - Client state management
 
-- Java 17 or higher
-- Maven 3.6 or higher
-- Docker and Docker Compose (for containerized deployment)
-- PostgreSQL 15 (for local development)
+### DevOps & Tools
+- **Docker & Docker Compose** - Containerization
+- **GitHub Actions** - CI/CD pipeline
+- **Lighthouse CI** - Performance monitoring
+- **OWASP Dependency Check** - Security scanning
+- **pnpm** - Fast package manager
 
 ## 🚀 Quick Start
 
-### Option 1: Docker Compose (Recommended)
+### Prerequisites
+- Java 17+
+- Node.js 18+
+- Docker & Docker Compose
+- Maven 3.8+
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd fintech
-   ```
-
-2. **Start the services**
-   ```bash
-   docker-compose up -d
-   ```
-
-3. **Access the application**
-   - API: http://localhost:8080/api
-   - Swagger UI: http://localhost:8080/api/docs
-   - pgAdmin: http://localhost:5050 (admin@fintech.com / admin123)
-
-### Option 2: Local Development
-
-1. **Start PostgreSQL**
-   ```bash
-   # Using Docker
-   docker run --name fintech-postgres -e POSTGRES_DB=fintech_db -e POSTGRES_USER=fintech_user -e POSTGRES_PASSWORD=fintech_password -p 5432:5432 -d postgres:15-alpine
-   ```
-
-2. **Run the application**
-   ```bash
-   mvn spring-boot:run
-   ```
-
-3. **Access the application**
-   - API: http://localhost:8080/api
-   - Swagger UI: http://localhost:8080/api/docs
-
-## 🗄️ Database Setup
-
-### Automatic Setup (Docker Compose)
-The database is automatically set up with the following:
-- Database: `fintech_db`
-- Username: `fintech_user`
-- Password: `fintech_password`
-- Migrations: Automatically applied via Flyway
-
-### Manual Setup
-1. Create a PostgreSQL database
-2. Update `application.yml` with your database credentials
-3. Run migrations: `mvn flyway:migrate`
-
-## 🔐 Authentication
-
-### Test Credentials
-The application comes with pre-seeded test users:
-
-| Username | Email | Password | Role |
-|----------|-------|----------|------|
-| testuser | test@example.com | password123 | USER |
-| adminuser | admin@example.com | password123 | ADMIN |
-
-### JWT Token
-- **Secret**: `mySecretKey` (configurable via `JWT_SECRET` environment variable)
-- **Expiration**: 24 hours
-- **Header**: `Authorization: Bearer <token>`
-
-### Getting a Token
+### 1. Clone the Repository
 ```bash
-curl -X POST http://localhost:8080/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "testuser",
-    "password": "password123"
-  }'
+git clone https://github.com/yourusername/fintech.git
+cd fintech
 ```
+
+### 2. Backend Setup
+```bash
+# Build and test
+mvn clean install
+
+# Run with Docker Compose (recommended)
+docker-compose up --build -d
+
+# Or run locally
+mvn spring-boot:run
+```
+
+### 3. Frontend Setup
+```bash
+cd fintech-frontend
+
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+
+# Build for production
+pnpm build
+```
+
+### 4. Access the Application
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8080/api
+- **API Documentation**: http://localhost:8080/api/docs
+- **Database Admin**: http://localhost:5050 (pgAdmin)
+
+## 🔑 Default Credentials
+
+| Username    | Email             | Password    | Role  |
+|-------------|-------------------|-------------|-------|
+| `testuser`  | `test@example.com`| `password123` | USER  |
+| `adminuser` | `admin@example.com`| `password123` | ADMIN |
 
 ## 📚 API Documentation
 
-### Swagger UI
-- **URL**: http://localhost:8080/api/docs
-- **Features**:
-  - Interactive API testing
-  - Request/response examples
-  - Authentication support
-  - Download OpenAPI specification
+The API is fully documented with OpenAPI/Swagger UI available at `/api/docs` when running the application.
 
-### API Endpoints
-
-#### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/profile` - Get user profile
-
-#### Transactions
-- `GET /api/accounts/{id}/transactions` - Get transactions
-- `POST /api/accounts/{id}/transactions` - Create transaction
-- `PATCH /api/transactions/{id}` - Update transaction
+### Key Endpoints
+- `GET /api/me` - Get current user profile
+- `POST /api/auth/login` - User authentication
+- `GET /api/transactions` - List transactions
 - `POST /api/transactions/import` - Import CSV transactions
-
-#### Categories
-- `GET /api/categories` - Get user categories
-- `POST /api/categories` - Create category
-- `PATCH /api/categories/{id}` - Update category
-- `DELETE /api/categories/{id}` - Delete category
-
-#### Budgets
-- `GET /api/budgets` - Get budgets
-- `POST /api/budgets` - Create budget
-- `GET /api/budgets/{id}` - Get budget details
-- `PATCH /api/budgets/{id}/items/{categoryId}` - Update budget item
-
-#### Reports
-- `GET /api/reports/cashflow` - Cashflow report
-- `GET /api/reports/spend-by-category` - Spending by category
-- `GET /api/reports/trend` - Trend analysis
-
-#### Banking Integration
+- `GET /api/reports/cashflow` - Cashflow reports
 - `POST /api/integrations/mockbank/link` - Link bank account
-- `GET /api/integrations/mockbank/connections` - Get connections
-- `DELETE /api/integrations/mockbank/connections/{id}` - Unlink account
-
-#### Webhooks
-- `POST /api/webhooks/mockbank` - Receive webhook
 - `POST /api/webhooks/test/simulate` - Simulate webhook
-- `GET /api/webhooks/events` - Get webhook events
 
 ## 🧪 Testing
 
-### Run All Tests
+### Backend Tests
 ```bash
+# Run all tests
 mvn test
-```
 
-### Run Integration Tests
-```bash
+# Run integration tests
 mvn test -Dtest="*IntegrationTest"
+
+# Run with coverage
+mvn test jacoco:report
 ```
 
-### Run Specific Test Class
+### Frontend Tests
 ```bash
-mvn test -Dtest="TransactionServiceIntegrationTest"
+cd fintech-frontend
+
+# Run unit tests
+pnpm test
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run E2E tests
+pnpm test:e2e
 ```
 
-### Test Coverage
+## 🐳 Docker Deployment
+
+### Development
 ```bash
-mvn jacoco:report
+docker-compose up --build -d
 ```
 
-## 🐳 Docker Commands
-
-### Build and Run
+### Production
 ```bash
-# Build the application
-docker-compose build
+# Build production images
+docker build -t fintech-backend .
+docker build -t fintech-frontend ./fintech-frontend
 
-# Start all services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f backend
-
-# Stop services
-docker-compose down
-
-# Stop and remove volumes
-docker-compose down -v
-```
-
-### Individual Services
-```bash
-# Start only PostgreSQL
-docker-compose up -d postgres
-
-# Start only the backend
-docker-compose up -d backend
-
-# Rebuild and restart backend
-docker-compose up -d --build backend
-```
-
-## 📊 Monitoring and Logs
-
-### Application Logs
-```bash
-# Docker Compose
-docker-compose logs -f backend
-
-# Local development
-tail -f logs/application.log
-```
-
-### Database Access
-- **pgAdmin**: http://localhost:5050
-  - Email: admin@fintech.com
-  - Password: admin123
-- **Direct Connection**: localhost:5432
-  - Database: fintech_db
-  - Username: fintech_user
-  - Password: fintech_password
-
-### Health Check
-```bash
-curl http://localhost:8080/api/health
+# Run with production compose
+docker-compose -f docker-compose.prod.yml up -d
 ```
 
 ## 🔧 Configuration
@@ -260,140 +216,71 @@ DATABASE_USERNAME=fintech_user
 DATABASE_PASSWORD=fintech_password
 
 # JWT
-JWT_SECRET=mySecretKey
+JWT_SECRET=your-secret-key
+JWT_EXPIRATION=86400000
 
-# Application
-SPRING_PROFILES_ACTIVE=docker
+# Frontend
+VITE_API_URL=http://localhost:8080/api
 ```
 
 ### Application Profiles
-- `default` - Local development
-- `docker` - Docker deployment
-- `test` - Testing environment
+- `dev` - Development with H2 database
+- `docker` - Docker environment
+- `test` - Test environment with Testcontainers
+- `prod` - Production environment
 
-## 📁 Project Structure
+## 📊 Monitoring & Observability
 
-```
-src/
-├── main/
-│   ├── java/com/fintech/
-│   │   ├── config/          # Configuration classes
-│   │   ├── domain/          # JPA entities
-│   │   ├── dto/             # Data transfer objects
-│   │   ├── repo/            # Repository interfaces
-│   │   ├── service/         # Business logic
-│   │   ├── web/             # REST controllers
-│   │   └── cli/             # CLI tools
-│   └── resources/
-│       ├── application.yml  # Main configuration
-│       ├── application-docker.yml
-│       └── db/migration/    # Flyway migrations
-└── test/
-    ├── java/com/fintech/
-    │   └── integration/     # Integration tests
-    └── resources/
-        ├── application-test.yml
-        └── test-data.sql    # Test data
-```
+- **Health Checks**: `/actuator/health`
+- **Metrics**: `/actuator/metrics`
+- **Audit Logs**: Comprehensive audit trail
+- **Error Tracking**: Centralized error handling
+- **Performance**: Lighthouse CI integration
 
-## 🚀 Deployment
+## 🔒 Security Features
 
-### Production Considerations
-1. **Environment Variables**: Set production database credentials
-2. **JWT Secret**: Use a strong, random JWT secret
-3. **CORS**: Configure allowed origins for production
-4. **Logging**: Configure appropriate log levels
-5. **Database**: Use managed PostgreSQL service
-6. **Monitoring**: Set up application monitoring
-7. **Security**: Enable HTTPS and security headers
-
-### Docker Production Build
-```bash
-# Build production image
-docker build -t fintech-backend:latest .
-
-# Run production container
-docker run -d \
-  --name fintech-backend \
-  -p 8080:8080 \
-  -e DATABASE_URL=jdbc:postgresql://your-db:5432/fintech_db \
-  -e DATABASE_USERNAME=your-username \
-  -e DATABASE_PASSWORD=your-password \
-  -e JWT_SECRET=your-secret \
-  fintech-backend:latest
-```
+- JWT-based authentication
+- CORS configuration
+- Input validation and sanitization
+- SQL injection prevention
+- XSS protection
+- CSRF protection
+- Rate limiting (configurable)
+- Audit logging for all operations
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
-6. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+- Follow the existing code style
+- Write tests for new features
+- Update documentation
+- Ensure all CI checks pass
+- Use conventional commits
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 🙏 Acknowledgments
 
-For support and questions:
-- Create an issue in the repository
-- Check the API documentation at http://localhost:8080/api/docs
-- Review the logs for error details
+- Spring Boot team for the excellent framework
+- React team for the amazing library
+- Tailwind CSS for the utility-first approach
+- All open-source contributors
 
-## 🔄 API Examples
+## 📞 Support
 
-### Create a Transaction
-```bash
-curl -X POST http://localhost:8080/api/accounts/33333333-3333-3333-3333-333333333333/transactions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <your-token>" \
-  -d '{
-    "amount": -25.50,
-    "description": "Coffee purchase",
-    "merchant": "Starbucks",
-    "postedAt": "2024-01-15T09:30:00",
-    "categoryId": "66666666-6666-6666-6666-666666666666"
-  }'
-```
-
-### Import CSV Transactions
-```bash
-curl -X POST http://localhost:8080/api/transactions/import \
-  -H "Authorization: Bearer <your-token>" \
-  -F "file=@transactions.csv"
-```
-
-### Get Cashflow Report
-```bash
-curl -X GET "http://localhost:8080/api/reports/cashflow?from=2024-01-01&to=2024-01-31" \
-  -H "Authorization: Bearer <your-token>"
-```
-
-### Simulate Webhook
-```bash
-curl -X POST http://localhost:8080/api/webhooks/test/simulate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "eventType": "transactions.new",
-    "accountId": "ext_account_123",
-    "transactions": [
-      {
-        "transactionId": "ext_txn_001",
-        "amount": -50.00,
-        "description": "Test transaction",
-        "merchant": "Test Merchant",
-        "postedAt": "2024-01-15T09:30:00",
-        "currency": "USD",
-        "category": "Food",
-        "status": "cleared"
-      }
-    ]
-  }'
-```
+- **Documentation**: [Wiki](https://github.com/yourusername/fintech/wiki)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/fintech/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/fintech/discussions)
+- **Email**: support@fintech.com
 
 ---
 
-**Happy coding! 🎉**
+Made with ❤️ by the Fintech Team

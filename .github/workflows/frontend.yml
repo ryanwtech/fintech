@@ -1,0 +1,154 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'fintech-frontend/**'
+      - '.github/workflows/frontend.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'fintech-frontend/**'
+      - '.github/workflows/frontend.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'pnpm'
+        cache-dependency-path: 'fintech-frontend/pnpm-lock.yaml'
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - name: Install dependencies
+      working-directory: ./fintech-frontend
+      run: pnpm install
+
+    - name: Run type checking
+      working-directory: ./fintech-frontend
+      run: pnpm run type-check
+
+    - name: Run linting
+      working-directory: ./fintech-frontend
+      run: pnpm run lint
+
+    - name: Run tests
+      working-directory: ./fintech-frontend
+      run: pnpm run test:ci
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'pnpm'
+        cache-dependency-path: 'fintech-frontend/pnpm-lock.yaml'
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - name: Install dependencies
+      working-directory: ./fintech-frontend
+      run: pnpm install
+
+    - name: Build application
+      working-directory: ./fintech-frontend
+      run: pnpm build
+
+    - name: Build Docker image
+      run: |
+        cd fintech-frontend
+        docker build -t fintech-frontend:${{ github.sha }} .
+        docker tag fintech-frontend:${{ github.sha }} fintech-frontend:latest
+
+    - name: Save Docker image
+      run: |
+        docker save fintech-frontend:${{ github.sha }} | gzip > fintech-frontend.tar.gz
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: fintech-frontend-build
+        path: |
+          fintech-frontend/dist/
+          fintech-frontend.tar.gz
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: fintech-frontend-build
+        path: ./dist
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Lighthouse CI
+      run: npm install -g @lhci/cli@0.12.x
+
+    - name: Run Lighthouse CI
+      run: lhci autorun
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  security-audit:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'pnpm'
+        cache-dependency-path: 'fintech-frontend/pnpm-lock.yaml'
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - name: Install dependencies
+      working-directory: ./fintech-frontend
+      run: pnpm install
+
+    - name: Run security audit
+      working-directory: ./fintech-frontend
+      run: pnpm audit --audit-level moderate
+
+    - name: Run dependency check
+      working-directory: ./fintech-frontend
+      run: pnpm run check:deps
