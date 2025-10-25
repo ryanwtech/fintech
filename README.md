@@ -103,44 +103,6 @@ A comprehensive personal finance management application built with Spring Boot a
 - Docker & Docker Compose
 - Maven 3.8+
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/yourusername/fintech.git
-cd fintech
-```
-
-### 2. Backend Setup
-```bash
-# Build and test
-mvn clean install
-
-# Run with Docker Compose (recommended)
-docker-compose up --build -d
-
-# Or run locally
-mvn spring-boot:run
-```
-
-### 3. Frontend Setup
-```bash
-cd fintech-frontend
-
-# Install dependencies
-pnpm install
-
-# Start development server
-pnpm dev
-
-# Build for production
-pnpm build
-```
-
-### 4. Access the Application
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8080/api
-- **API Documentation**: http://localhost:8080/api/docs
-- **Database Admin**: http://localhost:5050 (pgAdmin)
-
 ## 🔑 Default Credentials
 
 | Username    | Email             | Password    | Role  |
